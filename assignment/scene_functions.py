@@ -41,12 +41,10 @@ def create_building(width=4, height=8, depth=4, position=(0, 0, 0)):
     Returns:
         str: The name of the created building transform node.
     """
-    # TODO: Implement this function.
-    #   1. Create a polyCube with the given width, height, and depth.
-    #   2. Move it so its base sits on the ground at 'position'.
-    #      Hint: offset Y by height / 2.0.
-    #   3. Return the object name.
-    pass
+    x,y,z = position
+    building = cmds.polyCube(width=width,height=height,depth=depth)[0]
+    cmds.move(x, height/2 + y, z, building)
+    return building
 
 
 def create_tree(trunk_radius=0.3, trunk_height=3, canopy_radius=2,
@@ -62,13 +60,14 @@ def create_tree(trunk_radius=0.3, trunk_height=3, canopy_radius=2,
     Returns:
         str: The name of a group node containing the trunk and canopy.
     """
-    # TODO: Implement this function.
-    #   1. Create a polyCylinder for the trunk and position it.
-    #   2. Create a polySphere for the canopy, positioned on top of the trunk.
-    #   3. Group trunk and canopy together using cmds.group().
-    #   4. Move the group to 'position'.
-    #   5. Return the group name.
-    pass
+    x,y,z = position
+    trunk = cmds.polyCylinder(radius=trunk_radius,height=trunk_height)[0]
+    cmds.move(x,trunk_height/2+y,z)
+    canopy = cmds.polySphere(radius=canopy_radius)[0]
+    cmds.move(x,trunk_height,z)
+    tree = cmds.group(trunk,canopy)
+    cmds.move(x,y,z)
+    return "Tree"
 
 
 def create_fence(length=10, height=1.5, post_count=6, position=(0, 0, 0)):
@@ -91,7 +90,14 @@ def create_fence(length=10, height=1.5, post_count=6, position=(0, 0, 0)):
     #   3. Create a long, thin cube as a horizontal rail connecting them.
     #   4. Group everything and move to 'position'.
     #   5. Return the group name.
-    pass
+    x,y,z = position
+    post_spacing = length / (post_count -1)
+    for i in range(post_count):
+        post = cmds.polyCube(width=.5,height=height,depth=.5)[0]
+        cmds.move(post_spacing*i,height/2+y,z,post)
+    rail_length = post_spacing*post_count
+    rail = cmds.polyCube(width=rail_length,height=.5,depth=.5)[0]
+    cmds.move(x+post_count,height/2+y,z,rail)
 
 
 def create_lamp_post(pole_height=5, light_radius=0.5, position=(0, 0, 0)):
