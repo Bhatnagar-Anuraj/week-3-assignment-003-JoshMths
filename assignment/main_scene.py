@@ -24,6 +24,9 @@ GRADING CRITERIA:
 
 import maya.cmds as cmds
 import scene_functions as sf
+import importlib
+
+importlib.reload(sf)
 
 # ---------------------------------------------------------------------------
 # Scene Setup
@@ -41,7 +44,7 @@ ground = cmds.polyPlane(name="ground", width=60, height=60,
 #
 #   sf.create_building(width=5, height=10, depth=5, position=(-10, 0, 8))
 #   sf.create_tree(position=(3, 0, -5))
-#   sf.create_fence(length=12, post_count=7, position=(-6, 0, -3))
+sf.create_fence(length=12, post_count=7, position=(-6, 0, -3))
 #   sf.create_lamp_post(position=(8, 0, 2))
 #
 #   # Place 8 trees in a circle of radius 15:
@@ -49,7 +52,8 @@ ground = cmds.polyPlane(name="ground", width=60, height=60,
 #
 # Remember: call each function at least once, and aim for 15+ objects.
 # ---------------------------------------------------------------------------
-
+#sf.create_building(width=2,height=5,depth=3,position=(0,0,0))
+sf.create_tree(position=(3,0,-5))
 
 # ---------------------------------------------------------------------------
 # Final viewport framing (do not remove).
